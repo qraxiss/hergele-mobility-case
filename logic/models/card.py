@@ -44,5 +44,13 @@ def saved_payment(params: dict) -> Union[int, float]:
 
 def cancel_payment(params: dict) -> Union[int, float]:
     validate(params, validator.cancel_payment) # if no exception validation passed
-    params["payment"] = -params["payment"]
-    return saved_payment(params)
+
+    user = collection.find_one({"userNo":params["userNo"]})
+    if user is None:
+        raise NoOperationsError("No users found!")
+    
+    result = collection.update_one({"userNo":params["userNo"]}, { "$inc": { "balance": params["payment"] } })
+    if result.modified_count == 0:
+        raise NoOperationsError("Cancel failed!")
+
+    # TODO add payment history for per card
