@@ -52,5 +52,7 @@ def cancel_payment(params: dict) -> Union[int, float]:
     result = collection.update_one({"userNo":params["userNo"]}, { "$inc": { "balance": params["payment"] } })
     if result.modified_count == 0:
         raise NoOperationsError("Cancel failed!")
+    
+    return user["balance"] + params["payment"]
 
     # TODO add payment history for per card
