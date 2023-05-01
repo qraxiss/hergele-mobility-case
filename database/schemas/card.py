@@ -19,7 +19,7 @@ schema = {
         "balance": {'type': 'number'},
     },
     "additionalProperties": False,
-    "required": []
+    "required": ["userNo"]
 }
 
 card = Schema('card', schema)
