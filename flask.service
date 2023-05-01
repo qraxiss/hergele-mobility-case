@@ -1,0 +1,13 @@
+[Unit]
+Description=Hergele Backend Case
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/hergele-mobility-case
+ExecStart=/usr/bin/python3 /home/ubuntu/hergele-mobility-case/wsgi.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
