@@ -7,17 +7,22 @@ class UserAuthMiddleware:
     Simple WSGI middleware
     '''
 
+    res = Response(u'Authorization failed', mimetype= 'text/plain', status=401)
+
     def __init__(self, app):
         self.app = app
 
     def __call__(self, environ, start_response):
         request = Request(environ)
-        secret = request.headers.get("Authorization").replace("Bearer ", "")
-        # these are hardcoded for demonstration
-        # verify the username and password from some database or env config variable
+
+        bearer = request.headers.get("Authorization")
+
+        if bearer is None:
+            return self.res(environ, start_response)
+
+        secret = bearer.replace("Bearer ", "")
 
         if secret == config.BEARER:
             return self.app(environ, start_response)
 
-        res = Response(u'Authorization failed', mimetype= 'text/plain', status=401)
-        return res(environ, start_response)
+        return self.res(environ, start_response)
