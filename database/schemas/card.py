@@ -18,7 +18,6 @@ schema = {
         "allCards": allCardsSchema,
         "balance": {'type': 'number'},
     },
-    "additionalProperties": False,
     "required": ["userNo"]
 }
 
