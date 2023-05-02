@@ -5,7 +5,6 @@ def required(schema: dict, requires: dict):
     for key, value in requires.items():
         if key not in schema['properties']:
             schema['properties'][key] = value
-        
-        schema['required'].append(key)
+            schema['required'].append(key)
         
     return schema
